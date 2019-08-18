@@ -1,0 +1,44 @@
+﻿@model TankMonitor.SiteDb.Tank
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>Tank</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TankNumber" class="control-label"></label>
+                <input asp-for="TankNumber" class="form-control" />
+                <span asp-validation-for="TankNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TankSize" class="control-label"></label>
+                <input asp-for="TankSize" class="form-control" />
+                <span asp-validation-for="TankSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TankProduct" class="control-label"></label>
+                <input asp-for="TankProduct" class="form-control" />
+                <span asp-validation-for="TankProduct" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="SiteId" class ="form-control" value=@Convert.ToInt32(ViewData["SiteId"]) readonly="readonly" type="hidden" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-id="@ViewData["SiteId"]" >Back to List</a>
+</div>
+

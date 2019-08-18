@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Sites";
+}
+
+<h2>Sites</h2>
+
+
+<ejs-grid id="Grid" dataSource="@ViewBag.SiteDataSource" detailTemplate="#detailtemplate" detailDataBound="detailDataBound">
+    <e-grid-columns>
+        <e-grid-column field="SiteNumber" headerText="Site Number" width="110"></e-grid-column>
+        <e-grid-column field="SiteName" headerText="Site Name" width="110"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script id='detailtemplate' type="text/x-template">
+    <div class='custom-grid'></div>
+</script>
+
+<script>
+        function detailDataBound(e) {
+           var data = @Html.Raw(ViewBag.LatestInventories);
+            var detail = new ej.grids.Grid({
+                dataSource: data.filter((item) => item['SiteId'] === e.data['SiteId']),
+                columns: [
+                    { field: 'TankNumber', headerText: 'Tank Number', width: 110 },
+                    { field: 'Product', headerText: 'Product', width: 140 },
+                    { field: 'TankVolume', headerText: 'Tank Volume', width: 140 },
+                ]
+            });
+            detail.appendTo(e.detailElement.querySelector('.custom-grid'));
+        }
+</script>
+

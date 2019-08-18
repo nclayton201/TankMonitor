@@ -1,0 +1,43 @@
+﻿@model TankMonitor.SiteDb.Tank
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tank</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TankNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TankSize)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankSize)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TankProduct)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TankProduct)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Site)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Site.SiteId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TankId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

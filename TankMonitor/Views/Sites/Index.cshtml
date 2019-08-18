@@ -1,0 +1,60 @@
+﻿@model IEnumerable<TankMonitor.SiteDb.Site>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IpAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PortNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SiteNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SiteName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SiteAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PortNumber)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SiteId">Edit Site</a> |
+                <a asp-action="Index" asp-controller="Tanks" asp-route-id="@item.SiteId" asp-route-siteNumber="@item.SiteNumber">View / Update Tanks</a> |
+                <a asp-action="Delete" asp-route-id="@item.SiteId">Delete Site</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
