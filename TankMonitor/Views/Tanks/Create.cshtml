@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Create tank for @ViewData["SiteNumber"]</h2>
 
 <h4>Tank</h4>
 <hr />
@@ -32,13 +32,13 @@
                 <input asp-for="SiteId" class ="form-control" value=@Convert.ToInt32(ViewData["SiteId"]) readonly="readonly" type="hidden" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" siteId="@ViewData["SiteId"]" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index" asp-route-id="@ViewData["SiteId"]" >Back to List</a>
+    <a asp-action="Index" asp-route-id="@ViewData["SiteId"]" asp-route-siteNumber="@ViewData["SiteNumber"]">Back to List</a>
 </div>
 

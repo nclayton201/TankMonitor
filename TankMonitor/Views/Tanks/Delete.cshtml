@@ -33,14 +33,11 @@
         <dt>
             @Html.DisplayNameFor(model => model.Site)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Site.SiteId)
-        </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="TankId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" asp-route-id="@ViewData["SiteId"]" asp-route-siteNumber="@ViewData["SiteNumber"]" >Back to List</a>
     </form>
 </div>

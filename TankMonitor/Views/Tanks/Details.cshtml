@@ -8,7 +8,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Tank</h4>
+    <h4>Tank for site @ViewData["SiteNumber"]</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -29,15 +29,9 @@
         <dd>
             @Html.DisplayFor(model => model.TankProduct)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Site)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Site.SiteId)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.TankId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.TankId" asp-route-siteId="@ViewData["SiteId"]" asp-route-siteNumber="@ViewData["SiteNumber"]" >Edit</a> |
+    <a asp-action="Index" asp-route-id="@ViewData["SiteId"]" asp-route-siteNumber="@ViewData["SiteNumber"]">Back to List</a>
 </div>
