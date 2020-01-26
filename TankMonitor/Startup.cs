@@ -13,6 +13,11 @@ using TankMonitor.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TankMonitor.SiteDb;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using TankMonitor.Areas.Identity.Data;
+using TankMonitor.Models;
 
 namespace TankMonitor
 {
@@ -41,14 +46,29 @@ namespace TankMonitor
 
             services.AddScoped<ITankProcessor, TankProcessor>();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<AccountContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("AccountContextConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<TankMonitorUser, IdentityRole>().AddRoles<IdentityRole>()
+            //services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<AccountContext>()
+                .AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                    .AddRazorPagesOptions(options =>
+                    {
+                        options.AllowAreas = true;
+                        options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                        options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                    });
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -61,7 +81,16 @@ namespace TankMonitor
                 options.Password.RequiredUniqueChars = 1;
                 
             });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
             
+            services.AddSingleton<IEmailSender, EmailSender>();
+
         }
         
 
@@ -94,6 +123,16 @@ namespace TankMonitor
 
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTEzNTY3QDMxMzcyZTMxMmUzMGZmU3cranhuWkxEWTE1WDFTTGpPbWpkR0ptS1JmYjFkL28zTzJYZzlWVm89");
 
+
+        }
+    }
+
+    // Move to own file later?
+    public class EmailSender : IEmailSender
+    {
+        public Task SendEmailAsync(string email, string subject, string message)
+        {
+            return Task.CompletedTask;
         }
     }
 }

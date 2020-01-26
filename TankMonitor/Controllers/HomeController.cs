@@ -29,7 +29,6 @@ namespace TankMonitor.Controllers
 
             foreach (var site in sites) {
                 List<Inventory> fullInventories = tankProcessor.FetchInventories(site.SiteId);
-                //latestInventories.Add(tankProcessor.LatestInventories(fullInventories));
                 latestInventories.AddRange(tankProcessor.LatestInventories(fullInventories));
             }
 
